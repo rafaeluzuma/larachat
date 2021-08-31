@@ -7,6 +7,7 @@
 require('./bootstrap');
 
 window.Vue = require('vue').default;
+import store from './vuex/store'
 
 /**
  * The following block of code may be used to automatically register your
@@ -29,4 +30,5 @@ Vue.component('chat-component', require('./components/Chat/ChatComponent.vue').d
 
 const app = new Vue({
     el: '#app',
+    store
 });
