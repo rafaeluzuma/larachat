@@ -7,6 +7,7 @@
       <div class="relative my-5 text-gray-600">
         <input
           type="search"
+          v-model="filter"
           name="serch"
           placeholder="Search"
           class="w-full bg-gray-100 h-10 px-5 pr-10 rounded-full text-sm focus:outline-none focus:shadow-lg focus:bg-white hover:shadow-md"
@@ -35,7 +36,7 @@
     </div>
     <!-- users -->
     <ul class="flex flex-col chat-list">
-      <div v-for="(user, index) in users.data" :key="index">
+      <div v-for="(user, index) in users" :key="index">
         <li
           class="bg-white hover:bg-gray-100 border-b p-4 cursor-pointer"
           :class="{ 'is-active': activeChat === index }"
@@ -79,20 +80,31 @@
 </template>
 
 <script>
-import { mapActions, mapState} from 'vuex';
+import { mapActions, mapState, mapGetters} from 'vuex';
 export default {
   mounted() {
     this.getUsers()
   },
   computed: {
-    ...mapState({
-      users: (state) => state.users.users
-    })
+    // ...mapState({
+    //   users: (state) => state.users.users
+    // })
+    ...mapGetters({
+      allUsers: 'sortedUsers',
+    }),
+    users() {
+      return this.allUsers.filter(user => {
+        if(this.filter === '') return user
+
+        return user.name.includes(this.filter) || user.email === this.filter
+      })
+    }
   },
   data() {
     return {
       selected: "inbox",
       activeChat: 0,
+      filter: ''
     };
   },
   methods: {
