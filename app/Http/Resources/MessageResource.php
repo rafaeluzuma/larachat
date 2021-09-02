@@ -20,6 +20,7 @@ class MessageResource extends JsonResource
             'sender' => $this->sender,
             'receiver' => new UserResource($this->receiver),
             'date' => Carbon::make($this->created_at)->format('Y-m-d'),
+            'me' => auth()->user()->id == $this->sender_id
         ];
     }
 }

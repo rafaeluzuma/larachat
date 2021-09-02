@@ -1,8 +1,8 @@
 <template>
-  <div class="chat-sidebar">
+  <div class="chat-sidebar overflow-y-auto">
     <div class="px-8 lg:py-4 lg:px-6">
       <h3 class="text-xl font-semibold tracking-wide mt-5 hidden lg:block">
-        Conversas
+        Usuarios
       </h3>
       <div class="relative my-5 text-gray-600">
         <input
@@ -38,8 +38,9 @@
     <ul class="flex flex-col chat-list">
       <div v-for="(user, index) in users" :key="index">
         <li
-          class="bg-white hover:bg-gray-100 border-b p-4 cursor-pointer"
-          :class="{ 'is-active': activeChat === index }"
+          @click.prevent="openChatWithUser(user)"
+          :class="['hover:bg-gray-100', 'border-b' ,'p-4' ,'cursor-pointer', 
+          activeChat === user.id ? 'is-active':'bg-white']"
         >
           <div class="flex items-center relative">
             <div class="relative">
@@ -80,7 +81,7 @@
 </template>
 
 <script>
-import { mapActions, mapState, mapGetters} from 'vuex';
+import { mapActions, mapState, mapGetters, mapMutations} from 'vuex';
 export default {
   mounted() {
     this.getUsers()
@@ -108,7 +109,18 @@ export default {
     };
   },
   methods: {
-    ...mapActions(['getUsers'])
+    ...mapMutations({
+      addUserChat: 'ADD_USER_CONVERSATION'
+    }),
+    ...mapActions(['getUsers', 'getMessagesConsersation']),
+
+    openChatWithUser (user) {
+      this.activeChat = user.id
+      
+      this.addUserChat(user)
+
+      this.getMessagesConsersation()
+    }
   }
 };
 </script>

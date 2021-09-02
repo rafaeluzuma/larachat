@@ -28,4 +28,11 @@ class ChatApiController extends Controller
 
         return new MessageResource($message);
     }
+
+    public function messagesWithUser($id)
+    {
+        $message =  $this->message->conversationsWithUser($id);
+
+        return MessageResource::collection($message);
+    }
 }
