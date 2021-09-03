@@ -8,6 +8,10 @@
     <title>@yield('title')</title>
     <link rel="stylesheet" href="{{ url('css/app.css')}}">
     <link rel="stylesheet" href="{{ url('css/chat.css')}}">
+
+    <script>
+        window.Laravel = {!! json_encode(['user' => auth()->check() ? auth()->user()->id : ''])!!}
+    </script>
 </head>
 <body>
    <div id="app">

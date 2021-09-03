@@ -7,7 +7,10 @@
 require('./bootstrap');
 
 window.Vue = require('vue').default;
+import VueToastify from 'vue-toastify'
 import store from './vuex/store'
+
+Vue.use(VueToastify, {position: 'top-rigth'})
 
 /**
  * The following block of code may be used to automatically register your
